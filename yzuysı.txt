@@ -1,0 +1,65 @@
+import pandas as pd
+import numpy as np
+
+
+
+# CSV dosyasını okuma
+df = pd.read_csv("imdb_top_1000.csv")
+
+
+
+# Veri seti hakkında temel bilgiler
+df.info()
+
+
+
+
+# Null (boş) veri olup olmadığını kontrol etme
+null_data = df.isnull().sum()
+print(null_data)
+
+
+
+# Boş verileri kaldırma
+df = df.dropna()
+
+
+
+
+# İstenmeyen sütunları kaldırma
+df = df.drop(columns=["Poster_Link", "Certificate", "Runtime", "Overview", "Star1", "Star2", "Star3", "Star4"])
+
+
+# Sütun başlıklarını Türkçeye çevirme
+df = df.rename(columns={
+    "Series_Title": "Film_adı",
+    "Released_Year": "Yayın_Yılı",
+    "Genre": "Tür",
+    "IMDB_Rating": "IMDB_Puanı",
+    "Votes": "Oy_Sayısı",
+    "Gross": "Gişe",
+    "Director": "Yönetmen",
+    "Stars": "Oyuncular",
+    "No_of_Votes": "Oy_Sayısı"
+})
+
+
+
+
+
+
+# Türü 'Drama' olan satırları gösterme
+drama_films = df[df['Tür'] == 'Drama']
+print(drama_films)
+
+
+
+# IMDB puanı 8.5'ten büyük olan filmleri gösterme
+high_rated_films = df[df['IMDB_Puanı'] > 8.5]
+print(high_rated_films)
+
+
+
+
+
+
